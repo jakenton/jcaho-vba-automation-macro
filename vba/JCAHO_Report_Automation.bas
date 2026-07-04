@@ -35,9 +35,12 @@ Sub PrepareJCAHOPhase1()
     CleanRawExport rawSheet
 
     ' Set workbook font to Calibri for readability.
-    ThisWorkbook.Worksheets.Select
-    Cells.Font.Name = "Calibri"
-    rawSheet.Select
+    ' This avoids selecting all worksheets at once, which can cause errors.
+    Dim ws As Worksheet
+
+    For Each ws In ThisWorkbook.Worksheets
+        ws.Cells.Font.Name = "Calibri"
+    Next ws
 
     CreateJCAHOTabs
 
