@@ -92,6 +92,7 @@ Sub CreateJCAHOTabs()
     Dim sheetNames As Variant
     Dim sheetName As Variant
     Dim ws As Worksheet
+    Dim newSheet As Worksheet
     Dim sheetExists As Boolean
 
     sheetNames = Array( _
@@ -107,17 +108,19 @@ Sub CreateJCAHOTabs()
     For Each sheetName In sheetNames
 
         sheetExists = False
-    
+        
+        ' Check wheterh this sheet already exists.
         For Each ws In ThisWorkbook.Worksheets
-            If ws.Name = sheetName Then
+            If ws.Name = CStr(sheetName) Then
                 sheetExists = True
                 Exit For
             End If
         Next ws
 
+        ' If it does not exist, create new sheet and rename THAT specific new sheet.
         If sheetExists = False Then
-            ThisWorkbook.Worksheets.Add After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count)
-            ActiveSheet.Name = sheetName
+            Set newSheet = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count))
+            newSheet.Name = CStr(sheetName)
         End If
 
     Next sheetName
